@@ -20,6 +20,12 @@ def logo():
                                                                             
     ''')
 
+def getlike():
+    if 'debian' in like() or 'ubuntu' in like():
+        return 'debian'
+    if 'arch' in like():
+        return 'arch'
+
 def inpt():
     try:
         return int(input(Fore.YELLOW + '[enter number] ===> '))
@@ -48,10 +54,10 @@ def install(commands:dict):
     logo()
     logs_code = []
     is_cnt = True
-    print(menu_render([f'install with {i}' for i in commands[like()].keys()]))
+    print(menu_render([f'install with {i}' for i in commands[getlike()].keys()]))
     option = inpt()
     print(Fore.RESET)
-    cmds = (commands[like()][list(commands[like()].keys())[option]])
+    cmds = (commands[getlike()][list(commands[getlike()].keys())[option]])
     system('clear')
     print(Fore.MAGENTA + 'start installing ...' + Fore.RESET)
     for cmd in cmds:
