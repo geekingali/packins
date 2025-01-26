@@ -19,6 +19,9 @@ def FireFox():
         'arch' : {
             'pacman (recommended)' : [['sudo -S firefox']],
             'yay' : [['yay -S firefox']]
+        },
+        'debian' : {
+            'apt' : [['sudo apt install firefox']]
         }
     })
 def FirefoxDeveloper():
