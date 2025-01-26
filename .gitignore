@@ -1,2 +1,6 @@
 __pycache__/
 test.py
+a/
+a k/
+.gitignore
+install.json

@@ -1,4 +1,4 @@
-from config import menu_main
+from menu import menu_main
 from funcs import menu_render, logo, inpt
 
 last_menu = menu_main

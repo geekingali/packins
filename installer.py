@@ -1,4 +1,4 @@
-from funcs import get_distro, menu_render, logo, inpt, runc, install
+from funcs import install
 
 def Edge(): 
     install({
@@ -64,7 +64,7 @@ def FireFoxBeta():
                 ]
         }
     })
-def Chrome(): pass
+def Chrome():pass
 def Oblivion(): pass
 def Nekobox(): pass
 def Inshot(): pass
