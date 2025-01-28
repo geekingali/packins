@@ -29,16 +29,17 @@ def main():
                 noterr = False
             else: noterr = True
         if type(last_menu) == list:
-            logo()
-            print(menu_render(last_menu,ismainmenu))
-            option = inpt()
+            if noterr:
+                logo()
+                print(menu_render(last_menu,ismainmenu))
+                option = inpt()
             if option == 99: break
             if option == 98:execv(executable,['python'] + argv)
             try:
                 install(last_menu[option])
             except KeyboardInterrupt: exit(0)
             except Exception as e:
-                # option = inpterr()
+                option = inpterr()
                 if option == 99: exit(0)
                 if option == 98:execv(executable,['python'] + argv)
                 noterr = False
