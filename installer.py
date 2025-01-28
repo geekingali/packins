@@ -34,13 +34,16 @@ def FirefoxDeveloper():
 def FirefoxNightly():
     install({
         'arch' : {
-            'yay (recommended)' : [['yay -S firefox-nightly']],
+            'yay (recommended)' : [['lss -S firefox-nightly']],
             'git' : [
                 ['sudo pacman -S --needed git'],
                 ['git clone https://aur.archlinux.org/firefox-nightly.git'],
                 ['cd firefox-nightly'],
                 ['makepkg -si']
                 ]
+        },
+        'other' : {
+            '.tar.xz' : [['las -ltrha']]
         }
     })
 def FirefoxLTS():

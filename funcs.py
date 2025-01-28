@@ -1,12 +1,12 @@
-from distro import like
+from distro import like,info
 from colorama import init,Fore
-from os import system, chdir, getcwd
+from os import system, chdir, getcwd, execv
 from subprocess import call
-
+from sys import executable, argv
 def logo():
     system('clear')
     init()
-    print(Fore.RED + '''
+    print(Fore.LIGHTRED_EX + '''
 
 
     ░▒▓███████▓▒░ ░▒▓██████▓▒░ ░▒▓██████▓▒░░▒▓█▓▒░▒▓███████▓▒░ ░▒▓███████▓▒░ 
@@ -20,28 +20,38 @@ def logo():
                                                                             
     ''')
 
+def inpterr():
+    try:
+        return int(input(Fore.LIGHTRED_EX + '\n[Please enter a whole number][to exit : 99] ===> '))
+    except: return inpterr()
+
 def getlike():
-    if 'debian' in like() or 'ubuntu' in like():
+    dis = info()
+    dis = dis['id'] + dis['like']
+    if 'debian' in dis or 'ubuntu' in dis:
         return 'debian'
-    if 'arch' in like():
+    if 'arch' in dis:
         return 'arch'
+    else:
+        return 'other'
 
 def inpt():
     try:
-        return int(input(Fore.YELLOW + '[enter number] ===> '))
+        return int(input(Fore.LIGHTYELLOW_EX + '[enter number] ===> '))
     except:
-        return int(input(Fore.RED + '[Please enter a whole number][to exit : 99] ===> '))
+        return inpterr()
 
-# inpt = lambda:int(input(Fore.YELLOW + '[enter number] ===> '))
-
-menu_render = lambda menu: ''.join(f'{Fore.GREEN}[{i}] : {m}\n' for i, m in enumerate(menu)) + Fore.CYAN + '[99] : Exit \n'
+#menu_render = lambda menu: ''.join(f'{Fore.LIGHTGREEN_EX}[{i}] : {m}\n' for i, m in enumerate(menu)) + Fore.LIGHTCYAN_EX + '[99] : Exit \n'
+def menu_render(menu):
+    if menu == []: return Fore.LIGHTMAGENTA_EX + '[!] : installation method not found.\n\n' + Fore.LIGHTGREEN_EX + '[1] : back to menu.\n' + Fore.LIGHTCYAN_EX + '[99] : Exit \n'
+    return ''.join(f'{Fore.LIGHTGREEN_EX}[{i}] : {m}\n' for i, m in enumerate(menu)) + Fore.LIGHTCYAN_EX + '[99] : Exit \n'
 
 def run(cmd):
     try:
         c = call(cmd, shell=True)
         return c
     except KeyboardInterrupt:
-        ec = input(Fore.MAGENTA + '\n installing canceled, are you redy to reinstall[N/y] ===>')
+        ec = input(Fore.LIGHTMAGENTA_EX + '\n installing canceled,' + Fore.LIGHTCYAN_EX +' are you to reinstall[N/y] ===>')
         print(Fore.RESET)
         if ec == 'y' or ec == 'Y':
             system('clear')
@@ -54,33 +64,44 @@ def install(commands:dict):
     logo()
     logs_code = []
     is_cnt = True
-    print(menu_render([f'install with {i}' for i in commands[getlike()].keys()]))
+    try:
+        print(menu_render([f'install with {i}' for i in commands[getlike()].keys()]))
+    except:
+        print(Fore.LIGHTMAGENTA_EX + '==> installation method not found.\n\n' + Fore.LIGHTGREEN_EX + '[1] : back to menu.\n' + Fore.LIGHTCYAN_EX + '[99] : Exit \n')
     option = inpt()
-    print(Fore.RESET)
-    cmds = (commands[getlike()][list(commands[getlike()].keys())[option]])
+    if option == 1:execv(executable,['python'] + argv)
+    try:
+        cmds = (commands[getlike()][list(commands[getlike()].keys())[option]])
+    except :
+        if option == 99: exit(0)
     system('clear')
-    print(Fore.MAGENTA + 'start installing ...' + Fore.RESET)
+    print(Fore.LIGHTMAGENTA_EX + 'start installing ...' + Fore.RESET)
     for cmd in cmds:
         if 'cd' in str(cmd):
             chdir(str(cmd[0].split(' ')[1:])[2:-2].replace(',','').replace('\'','').replace('"',''))
-            print(Fore.GREEN + f'installing {cmds.index(cmd) + 1}/{len(cmds) + 1} ...' + Fore.RESET)
+            print(Fore.LIGHTGREEN_EX + f'installing {cmds.index(cmd) + 1}/{len(cmds) + 1} ...' + Fore.RESET)
             continue
         r = run(cmd)
         if r == 0:
-            print(Fore.GREEN + f'installed {cmds.index(cmd) + 1}/{len(cmds) + 1} ...' + Fore.RESET)
-            print(Fore.BLUE + f'installing {cmds.index(cmd) + 2}/{len(cmds) + 1} ...' + Fore.RESET)
+            print(Fore.LIGHTGREEN_EX + f'installed {cmds.index(cmd) + 1}/{len(cmds) + 1} ...' + Fore.RESET)
+            print(Fore.LIGHTBLUE_EX + f'installing {cmds.index(cmd) + 2}/{len(cmds) + 1} ...' + Fore.RESET)
         elif r == 'c':
-            print(Fore.BLUE + 'installing canceled by user')
+            print(Fore.LIGHTBLUE_EX + 'installing canceled by user')
             exit(0)
         else:
-            ec = input(Fore.RED + 'is eror, continue or exit?[E/c] ==>')
-            if ec == 'c' or ec == 'C':
-                is_cnt = True
-            else:
-                is_cnt = False
-        logs_code.append(r)
-        if is_cnt == True: pass
-        else: break
-    if any(log_code != 0 for log_code in logs_code):print(Fore.RED + 'eror in install')
-    else:print(Fore.MAGENTA + 'completed install')
-
+        #     ec = input(Fore.LIGHTRED_EX + 'is eror, continue or exit?[E/c] ==>')
+        #     if ec == 'c' or ec == 'C':
+        #         is_cnt = True
+        #     else:
+        #         is_cnt = False
+        # logs_code.append(r)
+        # if is_cnt == True: pass
+        # else: break
+    # if any(log_code != 0 for log_code in logs_code):print(Fore.LIGHTRED_EX + 'eror in install')
+            print(Fore.LIGHTRED_EX + '\neror in install\n')
+            if input(f'\n{Fore.LIGHTYELLOW_EX}Want to back menu(Y/n) : ') in {'n','N'}: exit(0)
+            else: execv(executable,['python'] + argv)
+    else:
+        print(Fore.LIGHTMAGENTA_EX + 'completed install')
+    if input(f'\n{Fore.LIGHTYELLOW_EX}Want to back menu(Y/n) : ') in {'n','N'}: exit(0)
+    else: execv(executable,['python'] + argv)
