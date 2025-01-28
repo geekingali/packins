@@ -1,5 +1,3 @@
-from installer import *
-
 menu_main = {
     'Network' : {
         'Browsers' : {
