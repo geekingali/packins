@@ -16,7 +16,7 @@ cd packins
 ```
 install req library's python
 ```bash
-python3 -m pip install -r req.txt
+python3 -m pip install -r requirments.txt
 ```
 run the app
 ```bash
