@@ -1,0 +1,8 @@
+[+] : install commands with json file
+[*] : load menu with json
+[*] : add req.txt pip
+[*] : check yay
+[*] : check apt update
+[*] : check pacman
+[*] : check git
+[*] : download commands json list with network 

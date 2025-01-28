@@ -3,6 +3,8 @@ from colorama import init,Fore
 from os import system, chdir, getcwd, execv
 from subprocess import call
 from sys import executable, argv
+from json import load
+
 def logo():
     system('clear')
     init()
@@ -60,7 +62,46 @@ def run(cmd):
         else:
             return 'c'
 
-def install(commands:dict):
+# def install(commands:dict):
+#     logo()
+#     logs_code = []
+#     is_cnt = True
+#     try:
+#         print(menu_render([f'install with {i}' for i in commands[getlike()].keys()]))
+#     except:
+#         print(Fore.LIGHTMAGENTA_EX + '==> installation method not found.\n\n' + Fore.LIGHTGREEN_EX + '[1] : back to menu.\n' + Fore.LIGHTCYAN_EX + '[99] : Exit \n')
+#     option = inpt()
+#     if option == 1:execv(executable,['python'] + argv)
+#     try:
+#         cmds = (commands[getlike()][list(commands[getlike()].keys())[option]])
+#     except :
+#         if option == 99: exit(0)
+#     system('clear')
+#     print(Fore.LIGHTMAGENTA_EX + 'start installing ...' + Fore.RESET)
+#     for cmd in cmds:
+#         if 'cd' in str(cmd):
+#             chdir(str(cmd[0].split(' ')[1:])[2:-2].replace(',','').replace('\'','').replace('"',''))
+#             print(Fore.LIGHTGREEN_EX + f'installing {cmds.index(cmd) + 1}/{len(cmds) + 1} ...' + Fore.RESET)
+#             continue
+#         r = run(cmd)
+#         if r == 0:
+#             print(Fore.LIGHTGREEN_EX + f'installed {cmds.index(cmd) + 1}/{len(cmds) + 1} ...' + Fore.RESET)
+#             print(Fore.LIGHTBLUE_EX + f'installing {cmds.index(cmd) + 2}/{len(cmds) + 1} ...' + Fore.RESET)
+#         elif r == 'c':
+#             print(Fore.LIGHTBLUE_EX + 'installing canceled by user')
+#             exit(0)
+#         else:
+#             print(Fore.LIGHTRED_EX + '\neror in install\n')
+#             if input(f'\n{Fore.LIGHTYELLOW_EX}Want to back menu(Y/n) : ') in {'n','N'}: exit(0)
+#             else: execv(executable,['python'] + argv)
+#     else:
+#         print(Fore.LIGHTMAGENTA_EX + 'completed install')
+#     if input(f'\n{Fore.LIGHTYELLOW_EX}Want to back menu(Y/n) : ') in {'n','N'}: exit(0)
+#     else: execv(executable,['python'] + argv)
+
+def install(name:str):
+    with open('install.json') as f:
+        commands = (load(f)[name])
     logo()
     logs_code = []
     is_cnt = True
@@ -89,15 +130,6 @@ def install(commands:dict):
             print(Fore.LIGHTBLUE_EX + 'installing canceled by user')
             exit(0)
         else:
-        #     ec = input(Fore.LIGHTRED_EX + 'is eror, continue or exit?[E/c] ==>')
-        #     if ec == 'c' or ec == 'C':
-        #         is_cnt = True
-        #     else:
-        #         is_cnt = False
-        # logs_code.append(r)
-        # if is_cnt == True: pass
-        # else: break
-    # if any(log_code != 0 for log_code in logs_code):print(Fore.LIGHTRED_EX + 'eror in install')
             print(Fore.LIGHTRED_EX + '\neror in install\n')
             if input(f'\n{Fore.LIGHTYELLOW_EX}Want to back menu(Y/n) : ') in {'n','N'}: exit(0)
             else: execv(executable,['python'] + argv)
@@ -105,3 +137,4 @@ def install(commands:dict):
         print(Fore.LIGHTMAGENTA_EX + 'completed install')
     if input(f'\n{Fore.LIGHTYELLOW_EX}Want to back menu(Y/n) : ') in {'n','N'}: exit(0)
     else: execv(executable,['python'] + argv)
+
