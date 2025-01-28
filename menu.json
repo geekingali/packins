@@ -1,0 +1,14 @@
+{
+    "network" : {
+        "browsers" : {
+            "firefox" : [
+                "firefox (recommended)",
+                "firefox developer",
+                "firefox nightly",
+                "firefox lts",
+                "firefox beta"
+            ],
+            "chrome" : ["chrome"]
+        }
+    }
+}

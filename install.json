@@ -1,5 +1,5 @@
 {
-    "Firefox (recommended)" : {
+    "firefox (recommended)" : {
         "arch" : {
             "pacman (recommended)" : [
                 ["sudo -S firefox"]
