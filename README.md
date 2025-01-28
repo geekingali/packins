@@ -32,5 +32,5 @@ Now, use the tool.
 - check apt
 - check pacman
 - check git
-- add req.txt pip file
+
 
